@@ -6,9 +6,10 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
+    "cdk": "bash scripts/cdk.sh",
+    "clean": "npm run build -- --build --clean",
     "test": "jest",
-    "cdk": "cdk"
+    "watch": "tsc -w"
   },
   "devDependencies": {
     "@aws-cdk/assert": "^1.22.0",
