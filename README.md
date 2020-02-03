@@ -6,6 +6,8 @@
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
     - [`env.sh`](#envsh)
+    - [Create a key pair](#create-a-key-pair)
+  - [Cleanup](#cleanup)
   - [Resources](#resources)
 
   ---
@@ -27,9 +29,10 @@
 
 You will need:
 - `bash` shell
+- The aws cli, configured for the above user
+- [`jq`](https://stedolan.github.io/jq/download/)
 - An aws account.  You will need your account number, and the name of the aws region you wish to deploy resources to, e.g., `us-east-1`
 - An aws account user with programmatic access, and permissions to perform tasks required by this procedure
-- The aws cli, configured for the above user
 
 ## Setup
 
@@ -41,9 +44,32 @@ Install `npm` dependencies, and move on to complete the following sections.
 
 ```bash
 #!/bin/bash
-export MY_AWS_ACCOUNT=<your aws account number> \
-export MY_AWS_REGION=<the aws region to deploy to> \
+export MY_AWS_ACCOUNT=<your aws account number> 
+export MY_AWS_REGION=<the aws region to deploy to> 
+export MY_KEY_PAIR_NAME="NextcloudKeyPair"
+export MY_PRIVATE_KEY_LOCATION=~/.ssh/nextcloud_private_key
 ```
+
+### Create a key pair
+
+**NOTE**: If you would rather use an existing key pair, set the value of `MY_KEY_PAIR_NAME` in `env.sh` to the name of your key pair, and skip the rest of this section.
+
+--- 
+
+If you do not already have a key pair you would like to use for this stack, run the `keypair.sh` script in the scripts folder. This will create a new aws key pair, and store a private key at `MY_PRIVATE_KEY_LOCATION` configured in `env.sh`.
+
+```
+bash scripts/keypair.sh
+```
+
+**WARNING**: If you lose your key pair, you will lose access to your EC2 instance!  Make a secure backup of your key pair.
+
+## Cleanup
+
+To tear down all resources, perform the following steps.
+
+1. Using the aws console, or aws cli, remove the key pair with name `MY_KEY_PAIR_NAME` from `env.sh`.
+2. Remove the stored private key from the location specified in `MY_PRIVATE_KEY_LOCATION` from `env.sh`.
 
 ## Resources
 
