@@ -6,6 +6,7 @@ node_modules
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+cdk.context.json
 
 # local script to populate env vars
 scripts/env.sh
